@@ -1,0 +1,154 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>.:: MATEMATICULATOR ::.</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="font/material-icons.css"> 
+</head>
+
+  <body> 
+
+
+    <!--------SEÇÃO INÍCIO!-------->
+    <section class="inicio">
+      <div><button class="material-icon som">volume_off</button></div>
+      <h1>MATEMATICULATOR</h1>
+      <p><img class="homer" src="img/homer.png"></p>
+      <p><button class="btn-inicio">JOGAR</button></p>
+    </section>
+
+
+
+    <!--------SEÇÃO DO JOGO!-------->
+    <section class="jogo">
+      <header>
+        <h2 class="pontos">PONTOS: <span class="acertos">0</span></h2>
+        <h2 class="tempo"><span>0</span>s</h2>
+      </header>
+
+      <h1>QUANTO É...</h1>
+
+        <div class="conta">
+          <p>25 x 7</p>
+          <button class="errado">134</button>
+          <button class="certo">175</button>
+          <button class="errado">215</button>
+        </div>
+
+        <div class="conta">
+          <p>37 x 16</p>
+          <button class="errado">314</button>
+          <button class="errado">412</button>
+          <button class="certo">592</button>
+        </div>
+
+        <div class="conta">
+          <p>413 x 18</p>
+          <button class="certo">7434</button>
+          <button class="errado">1754</button>
+          <button class="errado">2524</button>
+        </div>
+
+      </section>
+
+
+    <!--------SEÇÃO FINAL!-------->
+    <section class="final">
+      <div>
+        <h1>RESULTADO</h1>
+        <h2>Em 10 segundos sua pontuação foi: </h2>
+           <header class="resultado">
+               <p>
+                <span class="name"> PONTOS: </span> 
+                <span class="pontosFinal" id="pontos"> </span>
+               </p>
+
+              <form>
+                <button><strong> JOGAR NOVAMENTE </strong></button>
+              </form>
+      </div>
+    </section>
+  
+
+
+  
+  <!---------------------------------------SCRIPT--------------------------------------->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+
+    function load(){
+
+      //Música 
+      musicaTemaClassico = new Audio("musica/musica-fundo.mp3");
+
+      //Movimento do Homer
+      setInterval(function(){
+          $("section.inicio img.homer").animate({top:"-20px"},1500).
+          animate({top:"0px"},1500);
+        },3000);
+      }
+      load();
+
+      //Funções do Botão do som
+       $("section.inicio button.som").on("click", function(){
+         
+         textoDoBotao = $(this).text();
+         if(textoDoBotao == "volume_off"){
+           musicaTemaClassico.play();
+           $(this).text("volume_up");
+          }else{
+            musicaTemaClassico.pause();
+            $(this).text("volume_off");
+            
+          }
+       });
+
+       
+      //Mostrando a segunda tela
+        $("section.inicio button.btn-inicio").on("click", function(){
+            $("section").hide();
+            $("section.jogo").show();
+
+
+            
+        //Contagem do tempo
+         contagemDeTempo = setInterval(function(){
+            var conteudoTempo = parseInt($("h2.tempo span").text());
+            var soma = conteudoTempo + 1;
+            $("h2.tempo span").text(soma);
+            if(soma > 10){
+            clearInterval(contagemDeTempo);
+          
+              $("section.jogo").hide();
+              $("section.final").show();     
+          } 
+        },1000);
+
+          });
+
+          // Contagem dos pontos
+          $("section.jogo div button.certo").one("click", function(){
+              var acertos = parseInt ($("span.acertos").text());
+              var soma = acertos + 1;
+              $("span.acertos").text(soma);
+              $(this).css({opacity: 0.3});
+              
+              $("#pontos").text(soma);
+              });
+              
+
+  </script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+        
+</body>
+</html>
